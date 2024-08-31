@@ -26,6 +26,28 @@ Icarus is a high-performance file uploader that leverages the power of Rust, Web
 - **webpack**: Module bundling and development server
 - **wasm-pack**: Tool for building Rust-generated WebAssembly
 - **Express**: Web application framework for Node.js
+## Architecture Overview
+
+Icarus uses a hybrid architecture that combines the strengths of Rust/WebAssembly and Node.js/Express:
+
+1. **Rust and WebAssembly:**
+   - Handles performance-critical operations like file processing, compression, or encryption.
+   - Runs on the client-side (in the browser) via WebAssembly, enabling fast, local file operations.
+
+2. **Node.js and Express:**
+   - Provides a server-side API for operations that can't be done client-side, such as:
+     - Handling file uploads to the server
+     - Interacting with databases or external services
+     - Managing user sessions and authentication
+   - Serves the React application and static assets
+   - Acts as a reverse proxy for the Rust backend if needed
+
+3. **React:**
+   - Builds the user interface
+   - Integrates with the WASM module for client-side operations
+   - Communicates with the Express server for server-side operations
+
+This architecture allows us to leverage the performance benefits of Rust/WASM for compute-intensive tasks while using the rich ecosystem of Node.js for server-side operations and API management. The Express server acts as a bridge between the client-side application and any server-side resources or services that may be needed.
 
 ## Project Structure
 
